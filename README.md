@@ -1,5 +1,3 @@
-# Link para o Frontend
-
-https://github.com/allanindex/emotionDetect
+# ravdess
 
 https://paperswithcode.com/dataset/ravdess
