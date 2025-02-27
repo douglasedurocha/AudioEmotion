@@ -1,28 +1,21 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-// Dados mock para visualização enquanto integra com o backend
-const mockData = {
-  fileName: "teste.mp3",
-  resultString: "surprised"  
-};
 
 function Result() {
   const location = useLocation();
   const navigate = useNavigate();
   
-  const state = location.state || mockData;
+  const state = location.state;
 
-//habilitar após integração
-//   useEffect(() => {
+  useEffect(() => {
     
-//     if (!location.state) {
-//       navigate('/');
-//     }
-//   }, [location, navigate]);
+    if (!location.state) {
+      navigate('/');
+    }
+  }, [location, navigate]);
   
 
-  const { fileName, resultString } = state;
+  const { fileName, resultString, confidence } = state;
 
   const emotionMapping = {
     angry: { 
@@ -58,13 +51,15 @@ function Result() {
   const emotionKey = resultString.trim().toLowerCase();
   const { emoji, message } = emotionMapping[emotionKey] || { emoji: '', message: 'Emoção não reconhecida.' };
 
+  const confidencePercentage = (confidence * 100).toFixed(2);
+
   return (
     <div className='result'>
       <div className="container">
         <h1>Emoção Detectada:</h1>
         <div className="emoji">
           {emoji}
-          <span>{mockData.resultString}</span>
+          <span>{resultString} ({confidencePercentage}%)</span>
         </div>
         <p className='emotionText'>{message}</p>
         <p>Arquivo enviado: {fileName}</p>

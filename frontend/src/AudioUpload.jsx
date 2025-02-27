@@ -1,5 +1,5 @@
 // AudioUpload.js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 import uploadIcon from '/img/upload.webp'; 
@@ -28,22 +28,27 @@ function AudioUpload() {
     }
 
     const formData = new FormData();
-    formData.append('audio', audioFile);
+    formData.append('file', audioFile);
 
     try {
-      const response = await fetch('/api/upload', {
+      setUploadStatus('Enviando...');
+
+      const response = await fetch('http://localhost:8000/predict', {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
-        const resultString = await response.text();
+        const result = await response.json();
+        const resultString = result.emotion;
+        const confidence = result.confidence;
         setUploadStatus('Arquivo enviado com sucesso!');
         setFileSubmitted(true);
         navigate('/result', {
           state: {
             fileName,
             resultString,
+            confidence,
           },
         });
       } else {
