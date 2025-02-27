@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 # Load model and feature extractor
-model_name = "ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition"
+model_name = "firdhokk/speech-emotion-recognition-with-openai-whisper-large-v3"
 feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
 model = AutoModelForAudioClassification.from_pretrained(model_name)
 
