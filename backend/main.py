@@ -24,7 +24,7 @@ feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
 model = AutoModelForAudioClassification.from_pretrained(model_name)
 
 # Define emotions list (as per model configuration)
-emotions = ['angry', 'calm', 'disgust', 'fearful', 'happy', 'neutral', 'sad', 'surprised']
+emotions = ['angry', 'disgust', 'fearful', 'happy', 'neutral', 'sad', 'surprised']
 
 @app.post("/predict")
 async def predict_emotion(file: UploadFile = File(...)):
@@ -38,7 +38,7 @@ async def predict_emotion(file: UploadFile = File(...)):
         # Load and preprocess audio
         waveform, sample_rate = librosa.load(
             tmp_path,
-            sr=feature_extractor.sampling_rate,
+            sr=48000,
             mono=True
         )
         os.unlink(tmp_path)  # Delete temporary file
